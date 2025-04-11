@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Ticket - Home</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header>
+        <h1>Swift Ticket</h1>
+        <nav>
+            <ul>
+                <li class="logo"><a href="Index.html">Swift logo</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Event.html">Events</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Book Your Next Event with Ease!</h2>
+        <p>Discover, book, and enjoy events near you with Swift Ticket.</p>
+        <a href="Event.html" class="btn">Browse Events</a>
+    </section>
+
+    <!-- Featured Events Section -->
+    <section class="events">
+        <h2>Upcoming Events</h2>
+        <div class="event-container">
+            <!-- Example event card - update all of them similarly -->
+            
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0007.jpg" alt="Concert">
+                <h3>Pass Over</h3>
+                <p>Date: April 06, 2025</p>
+                <p>Location: Durban</p>
+                <a href="book.html" class="btn book-btn" 
+                   data-name="Pass Over"
+                   data-date="May 04, 2025"
+                   data-location="Umhlanga"
+                   data-description="Prasing the lord!"
+                   data-general-price="150"
+                   data-vip-price="300"
+                   data-vvip-price="800">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0006.jpg" alt="Concert">
+                <h3>Danki Gqom Fest</h3>
+                <p>Date: Aplril 03, 2025</p>
+                <p>Location: Umlazi</p>
+                <a href="book.html" class="btn book-btn" 
+                   data-name="New Years Eve"
+                   data-date="May 04, 2025"
+                   data-location="Max's Lifestyle"
+                   data-description="Gqom Fest!!!"
+                   data-general-price="150"
+                   data-vip-price="350"
+                   data-vvip-price="600">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0004.jpg" alt="Concert">
+                <h3>Garden Route Tour</h3>
+                <p>Date: November 03, 2025</p>
+                <p>Location: Durban</p>
+                <a href="book.html" class="btn book-btn" 
+                   data-name="Garden Route Tour"
+                   data-date="November 03, 2025"
+                   data-location="Botanic Garden"
+                   data-description="Bloom Season"
+                   data-general-price="200"
+                   data-vip-price="350"
+                   data-vvip-price="600">Book Now</a>
+            </div>
+        </div>
+        <!--<div class="event-container">
+            <div class="event">
+                <img src="Pictures/nye.jpg" alt="Concert">
+                <h3>New Years Eve</h3>
+                <p>Date: March 15, 2025</p>
+                <p>Location: Durban</p>
+                <a href="cart.html" class="btn" onclick="addToCart('New Years Eve', 100)">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/murumba.jpg" alt="Murumba">
+                <h3>Murumba Pitch</h3>
+                <p>Date: April 5, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/mgilane.jpg" alt="Mgilane Festival">
+                <h3>Siyaphothula</h3>
+                <p>Date: April 25, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0002.jpg" alt="meet and grill">
+                <h3>Meet and Grill</h3>
+                <p>Date: April 12, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+            
+           
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0005.jpg" alt="Durban">
+                <h3>Surtaday Bang</h3>
+                <p>Date: June 5, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0006.jpg" alt="Durban">
+                <h3>Danki Gqom Fest</h3>
+                <p>Date: May 03, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+            <div class="event">
+                <img src="Pictures/IMG-20250403-WA0007.jpg" alt="Durban">
+                <h3>Pass Over</h3>
+                <p>Date: May 6, 2025</p>
+                <a href="book.html" class="btn">Book Now</a>
+            </div>
+        </div>-->
+        <button class="prev-btn">&#10094;</button> <!-- Left Arrow -->
+        <button class="next-btn">&#10095;</button> <!-- Right Arrow -->
+    </section>
+    <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+    // Handle book now clicks
+    document.querySelectorAll('.book-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Get event data from data attributes
+            const eventData = {
+                name: this.dataset.name,
+                date: this.dataset.date,
+                location: this.dataset.location,
+                description: this.dataset.description,
+                prices: {
+                    general: this.dataset.generalPrice,
+                    vip: this.dataset.vipPrice,
+                    vvip: this.dataset.vvipPrice
+                }
+            };
+            
+            // Store in sessionStorage
+            sessionStorage.setItem('currentEvent', JSON.stringify(eventData));
+            
+            // Redirect to booking page
+            window.location.href = this.getAttribute('href');
+        });
+    });
+});
+        /*document.addEventListener("DOMContentLoaded", function () {
+            const prevBtn = document.querySelector(".prev-btn");
+            const nextBtn = document.querySelector(".next-btn");
+            const eventContainer = document.querySelector(".event-container");
+    
+            // Scroll Left
+            prevBtn.addEventListener("click", function () {
+                eventContainer.scrollBy({ left: -300, behavior: "smooth" });
+            });
+    
+            // Scroll Right
+            nextBtn.addEventListener("click", function () {
+                eventContainer.scrollBy({ left: 300, behavior: "smooth" });
+            });
+        });*/
+    </script>
+    
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Swift Ticket. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>

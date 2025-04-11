@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Ticket - Book Event</title>
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+
+    <header>
+        <h1>Swift Ticket</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Event.html">Events</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Book Your Ticket</h2>
+
+        <section class="event-details">
+            <h3 id="event-title">[Event Name]</h3>
+            <p id="event-date">Date: [Event Date]</p>
+            <p id="event-location">Location: [Event Location]</p>
+            <p id="event-description">[Event Description]</p>
+        </section>
+
+        <section class="ticket-selection">
+            <h3>Select Your Ticket</h3>
+            <table>
+                <tr>
+                    <th>Ticket Type</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                </tr>
+                <tr>
+                    <td>General</td>
+                    <td>R100</td>
+                    <td><input type="number" id="general" min="0" value="0"></td>
+                </tr>
+                <tr>
+                    <td>VIP</td>
+                    <td>R350</td>
+                    <td><input type="number" id="vip" min="0" value="0"></td>
+                </tr>
+                <tr>
+                    <td>VVIP</td>
+                    <td>R1000</td>
+                    <td><input type="number" id="vvip" min="0" value="0"></td>
+                </tr>
+            </table>
+            <button class="checkout-btn" onclick="validateSelection()">Proceed to Checkout</button>
+            <p id="error-message" class="error"></p>
+        </section>
+
+    </main>
+
+    <!-- Add this script to book.html -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get event data from storage
+        const eventData = JSON.parse(sessionStorage.getItem('currentEvent'));
+        
+        if (eventData) {
+            // Update the page with event details
+            document.getElementById('event-title').textContent = eventData.name;
+            document.getElementById('event-date').textContent = `Date: ${eventData.date}`;
+            document.getElementById('event-location').textContent = `Location: ${eventData.location}`;
+            document.getElementById('event-description').textContent = eventData.description;
+            
+            // Update prices in the table
+            document.querySelector('table tr:nth-child(2) td:nth-child(2)').textContent = `R${eventData.prices.general}`;
+            document.querySelector('table tr:nth-child(3) td:nth-child(2)').textContent = `R${eventData.prices.vip}`;
+            document.querySelector('table tr:nth-child(4) td:nth-child(2)').textContent = `R${eventData.prices.vvip}`;
+        } else {
+            // No event data found - redirect back
+            window.location.href = 'Event.html';
+        }
+    });
+    
+    function validateSelection() {
+        const general = parseInt(document.getElementById('general').value) || 0;
+        const vip = parseInt(document.getElementById('vip').value) || 0;
+        const vvip = parseInt(document.getElementById('vvip').value) || 0;
+        const errorElement = document.getElementById('error-message');
+    
+        if (general === 0 && vip === 0 && vvip === 0) {
+            errorElement.textContent = "Please select at least one ticket.";
+            return false;
+        }
+    
+        errorElement.textContent = "";
+    
+        // Get the current event
+        const eventData = JSON.parse(sessionStorage.getItem('currentEvent'));
+        if (!eventData) {
+            errorElement.textContent = "Event information missing. Please try again.";
+            return false;
+        }
+    
+        // Create booking object with event prices
+        const booking = {
+            event: eventData,
+            tickets: {
+                general: general,
+                vip: vip,
+                vvip: vvip
+            },
+            prices: { // Store the prices from the event
+                general: eventData.prices.general,
+                vip: eventData.prices.vip,
+                vvip: eventData.prices.vvip
+            }
+        };
+    
+        // Store in sessionStorage
+        sessionStorage.setItem("currentBooking", JSON.stringify(booking));
+    
+        // Redirect to checkout
+        window.location.href = "checkout.html";
+        return true;
+    }
+    </script>
+</body>
+</html>

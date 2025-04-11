@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swift Ticket - Invoice</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        /* Invoice-specific styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .invoice-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .invoice-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ff5722;
+        }
+        
+        .invoice-header h1 {
+            color: #ff5722;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .invoice-header p {
+            margin: 5px 0;
+            color: #666;
+        }
+        
+        .invoice-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .event-info, .customer-info {
+            flex: 1;
+        }
+        
+        .event-info h3, .customer-info h3 {
+            color: #ff5722;
+            margin-top: 0;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+        }
+        
+        .ticket-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .ticket-table th {
+            background-color: #ff5722;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .ticket-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .ticket-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .total-section {
+            text-align: right;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #ff5722;
+        }
+        
+        .total-amount {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff5722;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .print-btn, .payment-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .print-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .payment-btn {
+            background-color: #ff5722;
+            color: white;
+        }
+        
+        .payment-btn:hover {
+            background-color: #ff5722;
+        }
+        
+        @media print {
+            .action-buttons {
+                display: none;
+            }
+            
+            body {
+                background: white;
+            }
+            
+            .invoice-container {
+                box-shadow: none;
+                padding: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <h1>Swift Ticket</h1>
+            <p>Booking Confirmation</p>
+            <p id="invoice-date"></p>
+        </div>
+        
+        <div class="invoice-details">
+            <div class="event-info">
+                <h3>Event Information</h3>
+                <p id="event-name"></p>
+                <p id="event-date"></p>
+                <p id="event-location"></p>
+            </div>
+            
+            <div class="customer-info">
+                <h3>Booking Details</h3>
+                <p>Booking Reference: <span id="booking-ref"></span></p>
+                <p>Date: <span id="booking-date"></span></p>
+            </div>
+        </div>
+        
+        <table class="ticket-table">
+            <thead>
+                <tr>
+                    <th>Ticket Type</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody id="checkout-table">
+                <!-- Ticket data will be loaded here -->
+            </tbody>
+        </table>
+        
+        <div class="total-section">
+            <h3>Total Amount Due: <span class="total-amount" id="total-price">R0</span></h3>
+        </div>
+        
+        <div class="action-buttons">
+            <button class="print-btn" onclick="window.print()">Print Invoice</button>
+            <button class="payment-btn" onclick="processPayment()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Set current date
+            const now = new Date();
+            document.getElementById("invoice-date").textContent = `Generated: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
+            
+            // Generate a simple booking reference
+            document.getElementById("booking-ref").textContent = `SWIFT-${Math.floor(Math.random() * 1000000)}`;
+            document.getElementById("booking-date").textContent = now.toLocaleDateString();
+            
+            // Load booking data
+            const booking = JSON.parse(sessionStorage.getItem("currentBooking"));
+            let checkoutTable = document.getElementById("checkout-table");
+            let totalPrice = 0;
+        
+            if (!booking || (booking.tickets.general == 0 && booking.tickets.vip == 0 && booking.tickets.vvip == 0)) {
+                checkoutTable.innerHTML = "<tr><td colspan='4'>No tickets selected</td></tr>";
+                return;
+            }
+            
+            // Set event information
+            document.getElementById("event-name").textContent = booking.event.name;
+            document.getElementById("event-date").textContent = `Date: ${booking.event.date}`;
+            document.getElementById("event-location").textContent = `Location: ${booking.event.location}`;
+        
+            function addRow(type, price, quantity) {
+                if (quantity > 0) {
+                    let total = price * quantity;
+                    totalPrice += total;
+                    checkoutTable.innerHTML += `
+                        <tr>
+                            <td>${type}</td>
+                            <td>R${price}</td>
+                            <td>${quantity}</td>
+                            <td>R${total}</td>
+                        </tr>
+                    `;
+                }
+            }
+        
+            // Use the prices from the booking data
+            addRow("General Admission", booking.prices.general, booking.tickets.general);
+            addRow("VIP", booking.prices.vip, booking.tickets.vip);
+            addRow("VVIP", booking.prices.vvip, booking.tickets.vvip);
+        
+            document.getElementById("total-price").textContent = `R${totalPrice}`;
+        });
+        
+        function processPayment() {
+            // Here you can redirect to a real payment page
+            window.location.href = "payment.html";
+        }
+    </script>
+
+</body>
+</html>

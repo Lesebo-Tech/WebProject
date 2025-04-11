@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/style.css">
+    <title>Swift Ticket - Payment</title>
+  </head>
+  <body>
+    <nav>
+      <div class="nav__content">
+        <div class="logo"><a href="index.html">Swift Ticket</a></div>
+        <label for="check" class="checkbox">
+          <i class="ri-menu-line"></i>
+        </label>
+        <input type="checkbox" name="check" id="check" />
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section class="section">
+        <div class="formcontainer">
+            <h1 class="label">Payment Information</h1>
+
+            <form class="login_form" action="success.html" method="post" name="form" onsubmit="return validated()">
+                
+                <div class="font">Card holder</div>
+                <input type="text" name="text" placeholder="Full Name" required>
+
+                <div class="font font2">Card Number</div>
+                <input type="number" name="card number" placeholder="1234 5678 9012 3456" required>
+
+                <div class="font font2">Expiry date</div>
+                <input type="date" name="expnumber" required>
+
+                <div class="font font2">Security code</div>
+                <input type="number" name="number" placeholder="CVV" required>
+                            
+                <button type="submit" class="pay-btn">Pay Now</button>
+            </form>
+        </div>	
+    </section>
+    <script src="valid.js"></script>
+  </body>
+</html>

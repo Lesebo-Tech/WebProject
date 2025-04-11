@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Swift Ticket</title>
+    <link rel="stylesheet" href="style/style.css">
+    <style>
+        /* Additional styles for About page */
+        .about-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #ff5722;
+        }
+        
+        .about-header h2 {
+            color: #ff5722;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .about-text {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .about-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        .mission-values {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .mission-card {
+            flex: 1;
+            min-width: 250px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #ff5722;
+        }
+        
+        .mission-card h3 {
+            color: #ff5722;
+            margin-top: 0;
+        }
+        
+        .team-section {
+            margin-top: 50px;
+        }
+        
+        .team-members {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        
+        .team-member {
+            width: 200px;
+            text-align: center;
+        }
+        
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #ff5722;
+        }
+        
+        @media (max-width: 768px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .mission-card {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Swift Ticket</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Event.html">Events</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="about-section">
+            <div class="about-header">
+                <h2>About Swift Ticket</h2>
+                <p>Your premier destination for event tickets and unforgettable experiences</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Story</h3>
+                    <p>Founded in 2023, Swift Ticket was born out of a passion for live events and the desire to make ticket purchasing seamless and stress-free. What started as a small local platform has grown into South Africa's most trusted event ticketing service.</p>
+                    
+                    <p>We specialize in connecting music lovers, sports fans, and culture enthusiasts with their favorite events across Durban, Johannesburg, and beyond. From intimate club nights to massive stadium concerts, we've got you covered.</p>
+                    
+                    <div class="mission-values">
+                        <div class="mission-card">
+                            <h3>Our Mission</h3>
+                            <p>To revolutionize event access by providing the fastest, most reliable ticketing platform with unparalleled customer service.</p>
+                        </div>
+                        
+                        <div class="mission-card">
+                            <h3>Our Vision</h3>
+                            <p>To become Africa's leading ticketing platform while maintaining our commitment to local events and communities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-image">
+                    <img src="Pictures/kgotsong.jpg" alt="Swift Ticket Team">
+                </div>
+            </div>
+            
+            <div class="team-section">
+                <h3>Meet The Team</h3>
+                <div class="team-members">
+                    <div class="team-member">
+                        <img src="Pictures/nye.jpg" alt="CEO">
+                        <h4>John Doe</h4>
+                        <p>Founder & CEO</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="Pictures/murumba.jpg" alt="Marketing">
+                        <h4>Jane Smith</h4>
+                        <p>Marketing Director</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="Pictures/mgilane.jpg" alt="Technology">
+                        <h4>Mike Johnson</h4>
+                        <p>CTO</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <img src="Pictures/IMG-20250403-WA0001.jpg" alt="Customer Service">
+                        <h4>Sarah Williams</h4>
+                        <p>Customer Experience</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-section" style="margin-top: 50px; text-align: center;">
+                <h3>By The Numbers</h3>
+                <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin-top: 30px;">
+                    <div style="margin: 15px;">
+                        <h2 style="color: #ff5722;; font-size: 2.5rem; margin: 0;">5,000+</h2>
+                        <p>Events Listed</p>
+                    </div>
+                    <div style="margin: 15px;">
+                        <h2 style="color: #ff5722;; font-size: 2.5rem; margin: 0;">20,000+</h2>
+                        <p>Tickets Sold</p>
+                    </div>
+                    <div style="margin: 15px;">
+                        <h2 style="color: #ff5722;; font-size: 2.5rem; margin: 0;">98%</h2>
+                        <p>Customer Satisfaction</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Swift Ticket. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
